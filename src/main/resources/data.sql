@@ -1,0 +1,12 @@
+INSERT INTO user (USER_NAME, PASSWORD, DEPOSIT) VALUES ('admin', 'admin', 0);
+INSERT INTO user (USER_NAME, PASSWORD, DEPOSIT) VALUES ('pinkunicorn', 'unicornmeat', 0);
+INSERT INTO user (USER_NAME, PASSWORD, DEPOSIT) VALUES ('bol', 'blue', 0);
+INSERT INTO user (USER_NAME, PASSWORD, DEPOSIT) VALUES ('rosie', 'purple', 0);
+
+INSERT INTO roles (USER_NAME, ROLE) VALUES ('admin', 'ADMIN');
+INSERT INTO roles (USER_NAME, ROLE) VALUES ('pinkunicorn', 'BUYER');
+INSERT INTO roles (USER_NAME, ROLE) VALUES ('bol', 'SELLER');
+INSERT INTO roles (USER_NAME, ROLE) VALUES ('rosie', 'BUYER');
+INSERT INTO roles (USER_NAME, ROLE) VALUES ('rosie', 'SELLER');
+
+INSERT INTO productEntity (AMOUNT_AVAILABLE, COST, PRODUCT_NAME, SELLER_NAME) VALUES (10, 15, 'DBZ figurine', 'bol');

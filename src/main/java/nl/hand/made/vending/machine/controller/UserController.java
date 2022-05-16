@@ -1,8 +1,7 @@
 package nl.hand.made.vending.machine.controller;
 
 import lombok.RequiredArgsConstructor;
-import nl.hand.made.vending.machine.model.request.UserCreate;
-import nl.hand.made.vending.machine.model.request.UserPatch;
+import nl.hand.made.vending.machine.model.request.UserData;
 import nl.hand.made.vending.machine.model.response.UserResponse;
 import nl.hand.made.vending.machine.service.UserService;
 import org.springframework.http.MediaType;
@@ -15,17 +14,17 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * Get user by userName
+     * Get user by username
      *
-     * @param userName The userName of the requested user
-     * @return User matching the provided userName
+     * @param username The username of the requested user
+     * @return User matching the provided username
      */
     @GetMapping(
             path = "/user",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public UserResponse getUser(@RequestParam String userName) {
-        return userService.getUser(userName);
+    public UserResponse getUser(@RequestParam String username) {
+        return userService.getUser(username);
     }
 
     /**
@@ -37,33 +36,32 @@ public class UserController {
             path = "/user",
             consumes = "application/json"
     )
-    public void createUser(@RequestBody UserCreate user) {
+    public void createUser(@RequestBody UserData user) {
         userService.createUser(user);
     }
 
     /**
      * Edit user data
      *
-     * @param userName The userName of the user to edit
      * @param user     The user data
      */
-    @PatchMapping(
+    @PutMapping(
             path = "/user",
             consumes = "application/json"
     )
-    public void editUser(@RequestParam String userName, @RequestBody UserPatch user) {
-        userService.editUser(userName, user);
+    public void editUser(@RequestBody UserData user) {
+        userService.editUser(user);
     }
 
     /**
      * Delete user
      *
-     * @param userName The userName of the user to delete
+     * @param username The username of the user to delete
      */
     @DeleteMapping(
             path = "/user"
     )
-    public void deleteUser(@RequestParam String userName) {
-        userService.deleteUser(userName);
+    public void deleteUser(@RequestParam String username) {
+        userService.deleteUser(username);
     }
 }

@@ -2,9 +2,9 @@ package nl.hand.made.vending.machine.model;
 
 public enum Role {
 
-    BUYER,
-    SELLER,
-    ADMIN;
+    ROLE_BUYER,
+    ROLE_SELLER,
+    ROLE_ADMIN;
 
     public static Role fromString(String stringValue) {
         for (Role role : Role.values()) {

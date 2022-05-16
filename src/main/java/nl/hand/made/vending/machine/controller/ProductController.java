@@ -1,11 +1,12 @@
 package nl.hand.made.vending.machine.controller;
 
 import lombok.RequiredArgsConstructor;
-import nl.hand.made.vending.machine.model.request.ProductCreate;
-import nl.hand.made.vending.machine.model.request.ProductPatch;
+import nl.hand.made.vending.machine.model.request.ProductData;
 import nl.hand.made.vending.machine.model.response.ProductResponse;
 import nl.hand.made.vending.machine.service.ProductService;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class ProductController {
             path = "/products",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<ProductResponse> getProducts(@RequestParam(required = false) Boolean showOnlyAvailable) {
+    public List<ProductResponse> getProducts(@RequestParam(required = false) boolean showOnlyAvailable) {
         return productService.getProducts(showOnlyAvailable);
     }
 
@@ -53,8 +54,8 @@ public class ProductController {
             path = "/product",
             consumes = "application/json"
     )
-    public Integer createProduct(@RequestBody ProductCreate product) {
-        return productService.createProduct(product);
+    public Integer createProduct(@RequestBody ProductData product, @AuthenticationPrincipal User seller) {
+        return productService.createProduct(product, seller);
     }
 
     /**
@@ -63,12 +64,12 @@ public class ProductController {
      * @param id      The id of the product to edit
      * @param product The product data
      */
-    @PatchMapping(
+    @PutMapping(
             path = "/product/{id}",
             consumes = "application/json"
     )
-    public void editProduct(@PathVariable Integer id, @RequestBody ProductPatch product) {
-        productService.editProduct(id, product);
+    public void editProduct(@PathVariable Integer id, @RequestBody ProductData product, @AuthenticationPrincipal User seller) {
+        productService.editProduct(id, product, seller);
     }
 
     /**
@@ -79,7 +80,7 @@ public class ProductController {
     @DeleteMapping(
             path = "/product/{id}"
     )
-    public void deleteProduct(@PathVariable Integer id) {
-        productService.deleteProduct(id);
+    public void deleteProduct(@PathVariable Integer id, @AuthenticationPrincipal User seller) {
+        productService.deleteProduct(id, seller);
     }
 }

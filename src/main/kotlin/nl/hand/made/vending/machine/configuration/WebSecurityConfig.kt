@@ -30,11 +30,14 @@ class WebSecurityConfig(
         http.csrf().disable()
             .httpBasic()
             .and()
-            .authorizeRequests() // USER: Only creating a new user is open to everyone
+            .authorizeRequests()
+            // USER: Only creating a new user is open to everyone
             .antMatchers(HttpMethod.POST, "/user").permitAll()
-            .antMatchers("/user").hasRole("ADMIN") // PRODUCT: Only fetching product information is open to everyone
+            .antMatchers("/user").hasRole("ADMIN")
+            // PRODUCT: Only fetching product information is open to everyone
             .antMatchers(HttpMethod.GET, "/product*/**").permitAll()
-            .antMatchers("/product/**").hasAnyRole("ADMIN", "BUYER") // VENDING: Only allowed for buyers
+            .antMatchers("/product/**").hasAnyRole("SELLER")
+            // VENDING: Only allowed for buyers
             .antMatchers("/deposit", "/buy", "/reset").hasRole("BUYER")
             .anyRequest()
             .authenticated()

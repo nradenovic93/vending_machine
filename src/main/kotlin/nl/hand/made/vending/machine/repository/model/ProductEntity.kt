@@ -5,7 +5,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "PRODUCT")
 class ProductEntity(
-    @Id @GeneratedValue var id: Int? = null,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Int? = null,
     var amountAvailable: Int,
     var cost: Int,
     var productName: String,

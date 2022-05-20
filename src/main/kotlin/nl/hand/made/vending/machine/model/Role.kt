@@ -1,11 +1,9 @@
 package nl.hand.made.vending.machine.model
 
-import java.util.*
-
 enum class Role {
     ROLE_BUYER, ROLE_SELLER;
 
-    override fun toString() = name.lowercase(Locale.getDefault())
+    override fun toString() = name
 
     companion object {
         fun fromString(stringValue: String) =

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -26,6 +27,11 @@ class WebSecurityConfig(
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
+    override fun configure(web: WebSecurity) {
+        web.ignoring()
+            .antMatchers("/h2-console/**");
+    }
+
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
             .httpBasic()
@@ -36,7 +42,7 @@ class WebSecurityConfig(
             .antMatchers("/user").hasRole("ADMIN")
             // PRODUCT: Only fetching product information is open to everyone
             .antMatchers(HttpMethod.GET, "/product*/**").permitAll()
-            .antMatchers("/product/**").hasAnyRole("SELLER")
+            .antMatchers("/product/**").hasRole("SELLER")
             // VENDING: Only allowed for buyers
             .antMatchers("/deposit", "/buy", "/reset").hasRole("BUYER")
             .anyRequest()

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*
 class ProductController(
     private val productService: ProductService
 ) {
-
     /**
      * Get all products
      *
